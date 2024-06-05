@@ -11,3 +11,6 @@ sudo systemctl start mariadb
 sudo systemctl enable mariadb
 sudo systemctl start php-fpm
 sudo systemctl enable php-fpm
+
+# Secure MySQL installation
+sudo mysql_secure_installation
