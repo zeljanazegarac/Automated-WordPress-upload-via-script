@@ -38,3 +38,27 @@ sudo cp wp-config-sample.php wp-config.php
 sudo sed -i "s/database_name_here/${DB_NAME}/" wp-config.php
 sudo sed -i "s/username_here/${DB_USER}/" wp-config.php
 sudo sed -i "s/password_here/${DB_PASSWORD}/" wp-config.php
+
+# Configure NGINX
+sudo bash -c 'cat > /etc/nginx/conf.d/wordpress.conf <<EOF
+server {
+    listen 80;
+    server_name localhost;
+
+    root /var/www/html;
+    index index.php index.html index.htm;
+
+    location / {
+        try_files \$uri \$uri/ /index.php?\$args;
+    }
+
+    location ~ \.php\$ {
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass unix:/run/php-fpm/www.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+    }
+}
+EOF'
+sudo nginx -t
+sudo systemctl restart nginx
