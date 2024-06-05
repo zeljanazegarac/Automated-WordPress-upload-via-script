@@ -14,3 +14,13 @@ sudo systemctl enable php-fpm
 
 # Secure MySQL installation
 sudo mysql_secure_installation
+
+# Create MySQL database and user
+DB_NAME="wordpress"
+DB_USER="wp_user"
+DB_PASSWORD="password"
+
+sudo mysql -e "CREATE DATABASE ${DB_NAME};"
+sudo mysql -e "CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
+sudo mysql -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';"
+sudo mysql -e "FLUSH PRIVILEGES;"
