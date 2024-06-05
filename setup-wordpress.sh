@@ -24,3 +24,11 @@ sudo mysql -e "CREATE DATABASE ${DB_NAME};"
 sudo mysql -e "CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';"
 sudo mysql -e "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';"
 sudo mysql -e "FLUSH PRIVILEGES;"
+
+# Download and setup WordPress
+cd /var/www/html
+sudo wget https://wordpress.org/latest.tar.gz
+sudo tar -xvf latest.tar.gz
+sudo mv wordpress/* ./
+sudo chown -R apache:apache /var/www/html
+sudo chmod -R 755 /var/www/html
