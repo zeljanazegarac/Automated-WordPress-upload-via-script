@@ -4,17 +4,6 @@
 sudo dnf update -y
 sudo dnf install nginx mariadb-server php php-fpm php-mysqlnd -y
 
-# Start and enable services
-sudo systemctl start nginx
-sudo systemctl enable nginx
-sudo systemctl start mariadb
-sudo systemctl enable mariadb
-sudo systemctl start php-fpm
-sudo systemctl enable php-fpm
-
-# Secure MySQL installation
-sudo mysql_secure_installation
-
 # Create MySQL database and user
 DB_NAME="wordpress"
 DB_USER="wp_user"
@@ -29,15 +18,13 @@ sudo mysql -e "FLUSH PRIVILEGES;"
 cd /var/www/html
 sudo wget https://wordpress.org/latest.tar.gz
 sudo tar -xvf latest.tar.gz
+sudo cp wordpress/wp-config-sample.php wordpress/wp-config.php
+sudo sed -i "s/database_name_here/${DB_NAME}/" wordpress/wp-config.php
+sudo sed -i "s/username_here/${DB_USER}/" wordpress/wp-config.php
+sudo sed -i "s/password_here/${DB_PASSWORD}/" wordpress/wp-config.php
 sudo mv wordpress/* ./
 sudo chown -R apache:apache /var/www/html
 sudo chmod -R 755 /var/www/html
-
-# Configure wp-config.php
-sudo cp wp-config-sample.php wp-config.php
-sudo sed -i "s/database_name_here/${DB_NAME}/" wp-config.php
-sudo sed -i "s/username_here/${DB_USER}/" wp-config.php
-sudo sed -i "s/password_here/${DB_PASSWORD}/" wp-config.php
 
 # Configure NGINX
 sudo bash -c 'cat > /etc/nginx/conf.d/wordpress.conf <<EOF
@@ -64,3 +51,4 @@ sudo nginx -t
 sudo systemctl restart nginx
 
 echo "WordPress installation is complete. Open your browser and go to http://localhost to complete the installation."
+
