@@ -32,3 +32,9 @@ sudo tar -xvf latest.tar.gz
 sudo mv wordpress/* ./
 sudo chown -R apache:apache /var/www/html
 sudo chmod -R 755 /var/www/html
+
+# Configure wp-config.php
+sudo cp wp-config-sample.php wp-config.php
+sudo sed -i "s/database_name_here/${DB_NAME}/" wp-config.php
+sudo sed -i "s/username_here/${DB_USER}/" wp-config.php
+sudo sed -i "s/password_here/${DB_PASSWORD}/" wp-config.php
