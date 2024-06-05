@@ -62,3 +62,5 @@ server {
 EOF'
 sudo nginx -t
 sudo systemctl restart nginx
+
+echo "WordPress installation is complete. Open your browser and go to http://localhost to complete the installation."
