@@ -25,5 +25,3 @@ The script sets up the following default values:
 - Database Name: `wordpress`
 - Database User: `wp_user`
 - Database Password: `password`
-
-You can modify these values by editing the script before running it.
